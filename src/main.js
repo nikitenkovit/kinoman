@@ -48,7 +48,12 @@ render(footerStatistics, createFooterStatisticsTemplate());
 render(footer, createFilmDetailsPopapTemplate(), `afterEnd`);
 
 const filmDetails = document.querySelector(`.film-details`);
-const filmDetailsCloseBtn = filmDetails.querySelector(`.film-details__close-btn`);
-filmDetailsCloseBtn.onclick = () => {
-  filmDetails.style.display = `none`;
-};
+filmDetails.style.display = `none`;
+// const filmDetailsCloseBtn = filmDetails.querySelector(`.film-details__close-btn`);
+// filmDetailsCloseBtn.onclick = () => {
+//   filmDetails.style.display = `none`;
+// };
+
+import {generateFilm} from "./mock/film";
+
+console.log(generateFilm());
