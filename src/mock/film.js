@@ -1,15 +1,46 @@
-import {getRandomInteger} from "../utils";
-import {generateComment} from "./comments";
+import {getRandomInteger, removeDuplicate} from "../utils";
+import {generateComment, generateDate} from "./comments";
 
 const generateTitle = () => {
   const titles = [
-    `The Dance of Life`,
-    `Sagebrush Trail`,
-    `The Man with the Golden Arm`,
-    `Santa Claus Conquers the Martians`,
-    `Popeye the Sailor Meets Sindbad the Sailor`,
-    `The Great Flamarion`,
-    `Made for Each Other`
+    `Peter Pencil`,
+    `Lascivious Cinderella`,
+    `Kolobok in 3D`,
+    `Brjansk 2112`,
+    `Strong Olezhek`,
+    `Do not try to quit Chelyabinsk`,
+    `Pirates of Silicon Valley`,
+    `Escape from Omsk`,
+    `why did I wet the mantu?`,
+    `Broken doll`,
+    `The price of a different reality`,
+    `The market for feelings`,
+    `Save yourself`,
+    `Dirty water`,
+    `Purple fog`,
+    `A hero who has forgotten that he is a hero`,
+    `Misty Valley Hero`,
+    `Assimilation`,
+    `The shadow on the other side`,
+    `Save the world in nine lives`,
+    `Wet letter`,
+    `The canons of mechanics`,
+    `Summer travel`,
+    `Sun at the top of the hill`,
+    `Der Minister`,
+    `Master Dark`,
+    `Ocean of my pain`,
+    `Find the meaning`,
+    `Thought generator`,
+    `Born to dream`,
+    `Loser's piggy bank`,
+    `Famous warriors of our time`,
+    `Banner Lost in the Dark`,
+    `Forest San Fiero`,
+    `Deep breath`,
+    `Eye of Terror`,
+    `A story about the shape of fire`,
+    `Dead soil`
   ];
 
   const randomIndex = getRandomInteger(0, titles.length - 1);
@@ -64,7 +95,7 @@ const generateRating = () => {
 };
 
 const generateYear = () => {
-  return getRandomInteger(1933, 1964);
+  return generateDate(32120, `day`, `D MMMM YYYY`);
 };
 
 const generateDuration = () => {
@@ -95,17 +126,109 @@ const generateGenres = () => {
   return genres[randomIndex];
 };
 
+const generateDirector = () => {
+  const directors = [
+    `Djuzeppe Buratino`,
+    `Father Karlo`,
+    `Arnold Stalonovich`,
+    `Silvestr s Talonom`,
+    `Donald Goose`,
+    `Barri Alebastrov`,
+    `Mihael Shuhernaher`,
+    `Jacques Doshirak`,
+    `Dmitrii Beeline`,
+    `John Borjomi`,
+    `Jennifer Hlopec`,
+    `Yatasuka Nakomode`,
+    `Leave Trailer`,
+    `Demmy Meow`,
+    `Jim Fairy`,
+    `Mila Yoyoyobich`
+  ];
+
+  const randomIndex = getRandomInteger(0, directors.length - 1);
+
+  return directors[randomIndex];
+};
+
+const generateWriters = () => {
+  const writers = [
+    `Djuzeppe Buratino`,
+    `Father Karlo`,
+    `Arnold Stalonovich`,
+    `Silvestr s Talonom`,
+    `Donald Goose`,
+    `Barri Alebastrov`,
+    `Hope Babkina`,
+    `Mihael Shuhernaher`,
+    `Jacques Doshirak`,
+    `Dmitrii Beeline`,
+    `John Borjomi`,
+    `Jennifer Hlopec`,
+    `Yatasuka Nakomode`,
+    `Leave Trailer`,
+    `Demmy Meow`,
+    `Jim Fairy`,
+    `Mila Yoyoyobich`
+  ];
+
+  const randomIndex = getRandomInteger(0, writers.length - 1);
+
+  return writers[randomIndex];
+};
+
+const generateActors = () => {
+  const actors = [
+    `Djuzeppe Buratino`,
+    `Father Karlo`,
+    `Arnold Stalonovich`,
+    `Silvestr s Talonom`,
+    `Donald Goose`,
+    `Barri Alebastrov`,
+    `Hope Babkina`,
+    `Mihael Shuhernaher`,
+    `Jacques Doshirak`,
+    `Dmitrii Beeline`,
+    `John Borjomi`,
+    `Jennifer Hlopec`,
+    `Yatasuka Nakomode`,
+    `Leave Trailer`,
+    `Demmy Meow`,
+    `Jim Fairy`,
+    `Mila Yoyoyobich`
+  ];
+
+  const randomIndex = getRandomInteger(0, actors.length - 1);
+
+  return actors[randomIndex];
+};
+
+const generateCountry = () => {
+  const countries = [
+    `Russia`,
+    `USA`,
+    `India`,
+    `Great Britain`,
+    `Germany`,
+    `Poland`,
+    `Australia`,
+    `Italy`,
+    `France`
+  ];
+
+  const randomIndex = getRandomInteger(0, countries.length - 1);
+
+  return countries[randomIndex];
+};
+
 export const generateFilm = () => {
   const title = generateTitle();
-  const commentsArrayLength = getRandomInteger(0, 5);
+  const commentsArrayLength = getRandomInteger(0, 6);
   const comments = new Array(commentsArrayLength).fill().map(generateComment);
-  const genresArrayLength = getRandomInteger(1, 3);
-  const genres = new Array(genresArrayLength)
-    .fill()
-    .map(generateGenres);
-  const filteredGenresArr = genres.filter((item, pos) => {
-    return genres.indexOf(item) === pos;
-  });
+  const genres = removeDuplicate(generateGenres, 1, 4);
+  const writers = removeDuplicate(generateWriters, 2, 4).join(`, `);
+  const actors = removeDuplicate(generateActors, 3, 5).join(`, `);
+  const ageRating = getRandomInteger(0, 18) + `+`;
 
   return {
     title,
@@ -113,11 +236,15 @@ export const generateFilm = () => {
     poster: generatePoster(),
     description: generateDescription(),
     comments,
-    commentsNumberOf: comments.length,
     rating: generateRating(),
     year: generateYear(),
     duration: generateDuration(),
-    genres: filteredGenresArr,
+    genres,
+    director: generateDirector(),
+    writers,
+    actors,
+    ageRating,
+    country: generateCountry(),
     isWatchlist: Boolean(getRandomInteger(0, 1)),
     isWatched: Boolean(getRandomInteger(0, 1)),
     isFavorite: Boolean(getRandomInteger(0, 1))

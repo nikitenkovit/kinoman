@@ -56,11 +56,10 @@ const getAuthor = () => {
   return authors[randomIndex];
 };
 
-const generateDate = () => {
-  const maxDaysGap = 1000000;
-  const daysGap = getRandomInteger(1, -maxDaysGap);
+export const generateDate = (gap, unit, template) => {
+  const randomGap = getRandomInteger(1, -gap);
 
-  return dayjs().add(daysGap, `minute`).format(`YYYY/MM/DD HH:MM`);
+  return dayjs().add(randomGap, unit).format(template);
 };
 
 export const generateComment = () => {
@@ -68,6 +67,6 @@ export const generateComment = () => {
     commentText: getComment(),
     emotion: getEmotion(),
     author: getAuthor(),
-    date: generateDate()
+    commentDate: generateDate(1000000, `minute`, `YYYY/MM/DD HH:MM`)
   };
 };
