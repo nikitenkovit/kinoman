@@ -1,7 +1,8 @@
-import {addLetterAtTheEnd} from "../utils";
+import {addLetterAtTheEnd, createElement} from "../utils";
 
-export const createFilmCardTemplate = (film) => {
-  const {comments,
+const createFilmCardTemplate = (film) => {
+  const {
+    comments,
     description,
     duration,
     genres,
@@ -11,7 +12,8 @@ export const createFilmCardTemplate = (film) => {
     poster,
     rating,
     title,
-    year} = film;
+    year
+  } = film;
 
   const filmYear = () => {
     return year.split(` `).pop();
@@ -64,3 +66,26 @@ export const createFilmCardTemplate = (film) => {
     </article>`
   );
 };
+
+export default class FilmCard {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmCardTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}

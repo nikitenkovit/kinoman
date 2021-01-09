@@ -1,6 +1,6 @@
-import {addLetterAtTheEnd} from "../utils";
+import {addLetterAtTheEnd, createElement} from "../utils";
 
-export const createFilmDetailsPopapTemplate = (film) => {
+const createFilmDetailsPopapTemplate = (film) => {
   const {
     actors,
     ageRating,
@@ -174,3 +174,26 @@ export const createFilmDetailsPopapTemplate = (film) => {
 </section>`
   );
 };
+
+export default class FilmDetailsPopap {
+  constructor(film) {
+    this._film = film;
+    this._element = null;
+  }
+
+  getTemplate() {
+    return createFilmDetailsPopapTemplate(this._film);
+  }
+
+  getElement() {
+    if (!this._element) {
+      this._element = createElement(this.getTemplate());
+    }
+
+    return this._element;
+  }
+
+  removeElement() {
+    this._element = null;
+  }
+}
