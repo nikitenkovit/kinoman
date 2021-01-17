@@ -1,4 +1,5 @@
-import {addLetterAtTheEnd, createElement} from "../utils";
+import {addLetterAtTheEnd} from "../utils/common";
+import AbstractView from "./abstract";
 
 const createFilmDetailsPopapTemplate = (film) => {
   const {
@@ -19,7 +20,7 @@ const createFilmDetailsPopapTemplate = (film) => {
     title,
     titleOriginal,
     writers,
-    year
+    date
   } = film;
 
   const createFilmGenreTemplate = () => {
@@ -99,7 +100,7 @@ const createFilmDetailsPopapTemplate = (film) => {
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Release Date</td>
-              <td class="film-details__cell">${year}</td>
+              <td class="film-details__cell">${date}</td>
             </tr>
             <tr class="film-details__row">
               <td class="film-details__term">Runtime</td>
@@ -175,25 +176,55 @@ const createFilmDetailsPopapTemplate = (film) => {
   );
 };
 
-export default class FilmDetailsPopap {
+export default class FilmDetailsPopap extends AbstractView {
   constructor(film) {
+    super();
     this._film = film;
-    this._element = null;
+
+    this._clickHandler = this._clickHandler.bind(this);
+    this._addToWatchlistClickHandler = this._addToWatchlistClickHandler.bind(this);
+    this._markAsWatchedClickHandler = this._markAsWatchedClickHandler.bind(this);
+    this._favoriteClickHandler = this._favoriteClickHandler.bind(this);
   }
 
   getTemplate() {
     return createFilmDetailsPopapTemplate(this._film);
   }
 
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
+  _clickHandler() {
+    this._callback.click();
   }
 
-  removeElement() {
-    this._element = null;
+  _addToWatchlistClickHandler() {
+    this._callback.addToWatchlistClick();
+  }
+
+  _markAsWatchedClickHandler() {
+    this._callback.markAsWatchedClick();
+  }
+
+  _favoriteClickHandler() {
+    this._callback.favoriteClick();
+  }
+
+  setClickHandler(callback) {
+    this._callback.click = callback;
+
+    this.getElement().querySelector(`.film-details__close-btn`).addEventListener(`click`, this._clickHandler);
+  }
+
+  setAddToWatchlistClickHandler(callback) {
+    this._callback.addToWatchlistClick = callback;
+    this.getElement().querySelector(`.film-details__control-label--watchlist`).addEventListener(`click`, this._addToWatchlistClickHandler);
+  }
+
+  setMarkAsWatchedClickHandler(callback) {
+    this._callback.markAsWatchedClick = callback;
+    this.getElement().querySelector(`.film-details__control-label--watched`).addEventListener(`click`, this._markAsWatchedClickHandler);
+  }
+
+  setFavoriteClickHandler(callback) {
+    this._callback.favoriteClick = callback;
+    this.getElement().querySelector(`.film-details__control-label--favorite`).addEventListener(`click`, this._favoriteClickHandler);
   }
 }

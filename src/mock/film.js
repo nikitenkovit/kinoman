@@ -1,5 +1,7 @@
-import {getRandomInteger, removeDuplicate} from "../utils";
+import {getRandomInteger, removeDuplicate} from "../utils/common";
 import {generateComment, generateDate} from "./comments";
+
+const generateId = () => Date.now() + parseInt(Math.random() * 10000, 10);
 
 const generateTitle = () => {
   const titles = [
@@ -231,13 +233,14 @@ export const generateFilm = () => {
   const ageRating = getRandomInteger(0, 18) + `+`;
 
   return {
+    id: generateId(),
     title,
     titleOriginal: title,
     poster: generatePoster(),
     description: generateDescription(),
     comments,
     rating: generateRating(),
-    year: generateYear(),
+    date: generateYear(),
     duration: generateDuration(),
     genres,
     director: generateDirector(),
