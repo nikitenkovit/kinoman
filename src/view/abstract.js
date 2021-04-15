@@ -3,7 +3,7 @@ import {createElement} from "../utils/render.js";
 export default class Abstract {
   constructor() {
     if (new.target === Abstract) {
-      throw new Error(`Can't instantiate Abstract, only concrete one.`);
+      throw new Error(`You're trying to instantiate an Abstract class, Mario. Princess in the concrete one.`);
     }
 
     this._element = null;
@@ -11,7 +11,7 @@ export default class Abstract {
   }
 
   getTemplate() {
-    throw new Error(`Abstract method not implemented: getTemplate`);
+    throw new Error(`Abstract method is not implemented: getTemplate`);
   }
 
   getElement() {
@@ -26,3 +26,5 @@ export default class Abstract {
     this._element = null;
   }
 }
+
+
